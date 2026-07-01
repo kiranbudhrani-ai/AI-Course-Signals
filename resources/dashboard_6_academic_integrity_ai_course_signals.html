@@ -88,49 +88,34 @@ h1{
   font-size:13px;
   line-height:1.35;
 }
-.panel{
+.insights{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
   margin-top:22px;
+}
+.insight{
   border:1px solid var(--border);
-  border-radius:20px;
-  overflow:hidden;
+  border-left:7px solid var(--gold);
+  border-radius:18px;
+  padding:20px 22px;
   background:#fff;
   box-shadow:0 10px 22px rgba(15,23,42,.04);
 }
-.panel-header{
-  padding:20px 22px 10px;
-}
-.panel h2{
-  margin:0;
-  color:var(--green);
-  font-size:25px;
-}
-.panel p{
-  margin:6px 0 0;
-  color:#475569;
-  line-height:1.5;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  padding:16px 22px;
-  border-top:1px solid var(--border);
-  text-align:left;
-}
-th{
-  background:#F8FAFC;
-  color:#334155;
-  font-size:13px;
+.insight .label{
+  font-size:12px;
   text-transform:uppercase;
   letter-spacing:.08em;
+  font-weight:900;
+  color:var(--gold);
+  margin-bottom:8px;
 }
-td{font-size:18px}
-td.count{
-  text-align:right;
-  font-weight:950;
-  color:var(--green);
-  font-size:24px;
+.insight p{
+  margin:0;
+  color:#334155;
+  font-size:18px;
+  line-height:1.45;
+  font-weight:750;
 }
 .note{
   margin-top:22px;
@@ -140,13 +125,9 @@ td.count{
   border-top:1px solid var(--border);
   padding-top:18px;
 }
-.footer{
-  margin-top:22px;
-  color:var(--muted);
-  font-size:13px;
-}
 @media(max-width:920px){
   .metrics{grid-template-columns:repeat(2,1fr)}
+  .insights{grid-template-columns:1fr}
   h1{font-size:36px}
 }
 @media(max-width:560px){
@@ -192,39 +173,28 @@ td.count{
   </div>
 </section>
 
-<section class="panel">
-  <div class="panel-header">
-    <h2>Course-level cross-check</h2>
-    <p>Records show volume. Courses show spread.</p>
+<section class="insights" aria-label="Short insights">
+  <div class="insight">
+    <div class="label">Broader than the catalog</div>
+    <p>The academic integrity AI-use signal is broader than the formal AI curriculum signal.</p>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th style="text-align:right">Course count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Distinct courses identified with AI integrity records</td>
-        <td class="count">65</td>
-      </tr>
-      <tr>
-        <td>Courses overlapping with pre-2026 catalog AI courses</td>
-        <td class="count">2</td>
-      </tr>
-      <tr>
-        <td>Courses not catalog-labeled as AI</td>
-        <td class="count">63</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="insight">
+    <div class="label">Beyond AI-labeled courses</div>
+    <p>Most AI-tagged integrity cases occur in courses that are not catalog-labeled as AI courses.</p>
+  </div>
+  <div class="insight">
+    <div class="label">General curriculum signal</div>
+    <p>Student AI use is spreading across the general curriculum faster than formal AI curriculum adoption is visible in the catalog.</p>
+  </div>
+  <div class="insight">
+    <div class="label">Where AI appears</div>
+    <p>AI is not only appearing where the curriculum says “AI.” It is also appearing where students complete writing, analysis, problem-solving, and disciplinary assignments.</p>
+  </div>
 </section>
 
 <div class="note">
   <strong>Method note:</strong> Academic integrity records include cases tagged <em>SACR - Artificial Intelligence Used</em> from 2024-2025 and 2025-2026. Catalog comparison excludes 2026 effective-date courses because those courses do not yet have academic integrity case history in the provided data.
 </div>
-
 
 </div>
 </body>
