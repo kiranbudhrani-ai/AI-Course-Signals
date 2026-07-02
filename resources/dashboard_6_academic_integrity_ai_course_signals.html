@@ -56,7 +56,7 @@ h1{
 }
 .metrics{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:16px;
   margin-top:24px;
 }
@@ -88,35 +88,127 @@ h1{
   font-size:13px;
   line-height:1.35;
 }
-.insights{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
+.panel{
   margin-top:22px;
-}
-.insight{
   border:1px solid var(--border);
-  border-left:7px solid var(--gold);
-  border-radius:18px;
-  padding:20px 22px;
+  border-radius:20px;
+  overflow:hidden;
   background:#fff;
   box-shadow:0 10px 22px rgba(15,23,42,.04);
 }
-.insight .label{
-  font-size:12px;
+.panel-header{
+  padding:20px 22px 10px;
+}
+.panel h2{
+  margin:0;
+  color:var(--green);
+  font-size:25px;
+}
+.panel p{
+  margin:6px 0 0;
+  color:#475569;
+  line-height:1.5;
+}
+.chart{
+  padding:10px 22px 24px;
+}
+.bar-row{
+  display:grid;
+  grid-template-columns:260px 1fr 60px;
+  gap:14px;
+  align-items:center;
+  margin:18px 0;
+}
+.bar-label{
+  font-weight:850;
+  color:#334155;
+  line-height:1.25;
+}
+.bar-track{
+  height:34px;
+  border-radius:999px;
+  background:#EEF2F6;
+  overflow:hidden;
+  border:1px solid #E2E8F0;
+}
+.bar-fill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--green),#007A53);
+}
+.bar-fill.gold{
+  background:linear-gradient(90deg,var(--gold),#D1B16D);
+}
+.bar-value{
+  text-align:right;
+  font-weight:950;
+  color:var(--green);
+  font-size:24px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  padding:16px 22px;
+  border-top:1px solid var(--border);
+  text-align:left;
+}
+th{
+  background:#F8FAFC;
+  color:#334155;
+  font-size:13px;
   text-transform:uppercase;
   letter-spacing:.08em;
+}
+td{font-size:18px}
+td.count{
+  text-align:right;
+  font-weight:950;
+  color:var(--green);
+  font-size:24px;
+}
+
+.badge-yes,.badge-no{
+  display:inline-block;
+  min-width:58px;
+  text-align:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.badge-yes{
+  background:var(--pale);
+  color:var(--green);
+  border:1px solid #BFD8CB;
+}
+.badge-no{
+  background:#F1F5F9;
+  color:var(--muted);
+  border:1px solid #D8DEE6;
+}
+.table-scroll{
+  max-height:640px;
+  overflow:auto;
+  border-top:1px solid var(--border);
+}
+.table-scroll table th{
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+td.course-code{
   font-weight:900;
-  color:var(--gold);
-  margin-bottom:8px;
-}
-.insight p{
-  margin:0;
   color:#334155;
-  font-size:18px;
-  line-height:1.45;
-  font-weight:750;
+  font-variant-numeric:tabular-nums;
 }
+td.center, th.center{
+  text-align:center;
+}
+
 .note{
   margin-top:22px;
   color:var(--muted);
@@ -125,9 +217,15 @@ h1{
   border-top:1px solid var(--border);
   padding-top:18px;
 }
+.footer{
+  margin-top:22px;
+  color:var(--muted);
+  font-size:13px;
+}
 @media(max-width:920px){
   .metrics{grid-template-columns:repeat(2,1fr)}
-  .insights{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:1fr}
+  .bar-value{text-align:left}
   h1{font-size:36px}
 }
 @media(max-width:560px){
@@ -152,49 +250,142 @@ h1{
 
 <section class="metrics" aria-label="Key metrics">
   <div class="metric">
-    <div class="num">216</div>
-    <div class="label">AI integrity records</div>
-    <div class="sub">2024-2025 and 2025-2026</div>
+    <div class="num">218</div>
+    <div class="label">Total AI integrity cases</div>
+    <div class="sub">Across 65 distinct courses</div>
   </div>
   <div class="metric">
-    <div class="num">65</div>
-    <div class="label">Distinct courses</div>
-    <div class="sub">with AI integrity records</div>
+    <div class="num">85</div>
+    <div class="label">2024-2025 cases</div>
+    <div class="sub">Across 37 distinct courses</div>
   </div>
   <div class="metric">
-    <div class="num">2</div>
-    <div class="label">Catalog overlaps</div>
-    <div class="sub">with pre-2026 catalog AI courses</div>
-  </div>
-  <div class="metric">
-    <div class="num">63</div>
-    <div class="label">Not catalog-labeled as AI</div>
-    <div class="sub">AI integrity courses outside formal catalog AI signals</div>
+    <div class="num">133</div>
+    <div class="label">2025-2026 cases</div>
+    <div class="sub">Across 33 distinct courses</div>
   </div>
 </section>
 
-<section class="insights" aria-label="Short insights">
-  <div class="insight">
-    <div class="label">Broader than the catalog</div>
-    <p>The academic integrity AI-use signal is broader than the formal AI curriculum signal.</p>
+
+<section class="panel">
+  <div class="panel-header">
+    <h2>Course-level cross-check</h2>
+    <p>Records show volume. Courses show spread.</p>
   </div>
-  <div class="insight">
-    <div class="label">Beyond AI-labeled courses</div>
-    <p>Most AI-tagged integrity cases occur in courses that are not catalog-labeled as AI courses.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th style="text-align:right">Course count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Distinct courses identified with AI integrity records</td>
+        <td class="count">65</td>
+      </tr>
+      <tr>
+        <td>Courses overlapping with pre-2026 catalog AI courses</td>
+        <td class="count">2</td>
+      </tr>
+      <tr>
+        <td>Courses not catalog-labeled as AI</td>
+        <td class="count">63</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<section class="panel">
+  <div class="panel-header">
+    <h2>Distinct courses listed in academic integrity AI records</h2>
+    <p>Each row shows a distinct course identified in records tagged <em>SACR - Artificial Intelligence Used</em> and whether that same course also appears in the AI course-signal catalog.</p>
   </div>
-  <div class="insight">
-    <div class="label">General curriculum signal</div>
-    <p>Student AI use is spreading across the general curriculum faster than formal AI curriculum adoption is visible in the catalog.</p>
-  </div>
-  <div class="insight">
-    <div class="label">Where AI appears</div>
-    <p>AI is not only appearing where the curriculum says “AI.” It is also appearing where students complete writing, analysis, problem-solving, and disciplinary assignments.</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th style="text-align:right">Number of records</th>
+          <th class="center">Appears in AI catalog courses</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr><td class="course-code">CJUS 2340</td><td class="count">72</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CTCM 2530</td><td class="count">20</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">POLS 3132</td><td class="count">13</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 1101</td><td class="count">8</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">POLS 1501</td><td class="count">6</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">BIOL 3144</td><td class="count">5</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">EXER 2168</td><td class="count">5</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 2115</td><td class="count">5</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">PHIL 1512</td><td class="count">4</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 4111</td><td class="count">4</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CJUS 2370</td><td class="count">3</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 4112</td><td class="count">3</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ENGL 2161</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">EXER 1099</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITCS 3156</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITCS 4101</td><td class="count">2</td><td class="center"><span class="badge-yes">Yes</span></td></tr>
+      <tr><td class="course-code">ITCS 4230</td><td class="count">2</td><td class="center"><span class="badge-yes">Yes</span></td></tr>
+      <tr><td class="course-code">LTAM 1502</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">MUSC 4230</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">PHIL 4600</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">PSYC 2113</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 2171</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOWK 4090</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SPED 6242</td><td class="count">2</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">AFRS 3155</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ANTH 1501</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">BIOL 2120</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">BIOL 3000</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">BIOL 4000</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">BUSN 1101</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CEGR 2103</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CHEM 1252</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CHEM 4165</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CJUS 3000</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CJUS 3321</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CJUS 4363</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">CJUS 6000</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">COMM 2104</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">COMM 3050</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">COMM 3052</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">COMM 3135</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ECGR 4111</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ECON 2102</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ENGL 3202</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">EXER 3287</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">FINN 3273</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">GERM 1201</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">GRAD 8210</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">HIST 3155</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">HONR 3700</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">HONR 3790</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITCS 5010</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITSC 2181</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITSC 2214</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">ITSC 3156</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">MKTG 3110</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">MUSC 3170</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">N/A 1501</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">OTHER 1501</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">PSYC 2103</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">PSYC 2171</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOCY 2161</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOWK 7122</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SOWK 7651</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      <tr><td class="course-code">SPAN 1101</td><td class="count">1</td><td class="center"><span class="badge-no">No</span></td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <div class="note">
   <strong>Method note:</strong> Academic integrity records include cases tagged <em>SACR - Artificial Intelligence Used</em> from 2024-2025 and 2025-2026. Catalog comparison excludes 2026 effective-date courses because those courses do not yet have academic integrity case history in the provided data.
 </div>
+
 
 </div>
 </body>
