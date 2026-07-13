@@ -20,4 +20,30 @@ jobs:
           from pathlib import Path
 
           path = Path('resources/dashboard_5_full_dashboard.html')
-          text = path.read_text(encoding
+          text = path.read_text(encoding='utf-8')
+
+          note = '''      <div class="growth-note"><strong>Reading the numbers:</strong> The lines above show <em>cumulative</em> totals by catalog — Undergraduate reaches 47, Graduate reaches 42, for 89 combined. The <strong>46</strong> in the panel at right is a different measure: the number of records (both catalogs combined) that became newly effective in 2026 alone.</div>'''
+          if 'Reading the numbers:' in text:
+              print('Already applied — no changes made.')
+              raise SystemExit(0)
+
+          old = '    </svg>\n    </section>'
+          if old not in text:
+              raise SystemExit('Could not find the expected growth chart closing pattern.')
+
+          text = text.replace(old, '    </svg>\n' + note + '\n    </section>', 1)
+          path.write_text(text, encoding='utf-8')
+          print('Done — footnote added to Dashboard 5.')
+          PY
+
+      - name: Commit Dashboard 5 update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add resources/dashboard_5_full_dashboard.html
+          if git diff --cached --quiet; then
+            echo "No Dashboard 5 changes to commit."
+          else
+            git commit -m "Add clarification note to dashboard 5 growth chart"
+            git push
+          fi
