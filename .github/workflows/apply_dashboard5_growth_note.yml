@@ -1,0 +1,23 @@
+name: Apply Dashboard 5 growth note
+
+on:
+  push:
+    paths:
+      - .github/workflows/apply_dashboard5_growth_note.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-note:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add clarification note directly to Dashboard 5
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('resources/dashboard_5_full_dashboard.html')
+          text = path.read_text(encoding
