@@ -1,0 +1,54 @@
+name: Apply Dashboard 8 Highlight Metric
+
+on:
+  push:
+    paths:
+      - .github/workflows/apply_dashboard8_highlight.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-highlight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Combine 46 of 89 and 51.7 percent metric in Dashboard 8
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('resources/dashboard_8_provost_report.html')
+          text = path.read_text(encoding='utf-8')
+
+          css_old = ".kpi.gold{border-top-color:var(--gold)}.kpi.gold .val{color:#8a6d3b}"
+          css_new = ".kpi.gold{border-top-color:var(--gold)}.kpi.gold .val{color:#8a6d3b}.kpi.highlight{grid-column:span 2;background:linear-gradient(180deg,#fff 0%,#f4ead4 100%);border:1px solid #d8c398;border-top:6px solid var(--gold);padding:20px 18px}.kpi.highlight .val{font-size:44px;line-height:.95}.kpi.highlight .lbl{font-size:13px;color:#3b3322;line-height:1.25;text-transform:none;letter-spacing:0;font-weight:800}.kpi.highlight .lbl strong{color:var(--green-dark)}"
+          if css_new not in text:
+              if css_old not in text:
+                  raise SystemExit('CSS insertion point not found')
+              text = text.replace(css_old, css_new, 1)
+
+          old = """<section><p class="eyebrow">Section 2</p><h2>Key Metrics</h2><div class="kpi-grid"><div class="kpi"><div class="val">117</div><div class="lbl">Total AI-signal records</div></div><div class="kpi"><div class="val">67</div><div class="lbl">Tier 1 — AI in title</div></div><div class="kpi gold"><div class="val">50</div><div class="lbl">Tier 2 — AI in description</div></div><div class="kpi"><div class="val">46</div><div class="lbl">Effective in 2026</div></div></div><div class="kpi-grid" style="margin-top:14px"><div class="kpi gold"><div class="val">51.7%</div><div class="lbl">Of dated records added in 2026</div></div><div class="kpi"><div class="val">6 / 8</div><div class="lbl">Colleges with AI signals</div></div><div class="kpi"><div class="val">26</div><div class="lbl">Disciplines / course types</div></div><div class="kpi"><div class="val">11</div><div class="lbl">AI-titled programs</div></div></div><div class="note-box">Total records include 79 distinct course titles; 117 counts undergraduate/graduate pairs that share one title as separate records. Of 117 total records, 89 have a usable effective year and 28 do not.</div></section>"""
+          new = """<section><p class="eyebrow">Section 2</p><h2>Key Metrics</h2><div class="kpi-grid"><div class="kpi"><div class="val">117</div><div class="lbl">Total AI-signal records</div></div><div class="kpi"><div class="val">67</div><div class="lbl">Tier 1 — AI in title</div></div><div class="kpi gold"><div class="val">50</div><div class="lbl">Tier 2 — AI in description</div></div><div class="kpi"><div class="val">6 / 8</div><div class="lbl">Colleges with AI signals</div></div></div><div class="kpi-grid" style="margin-top:14px"><div class="kpi gold highlight"><div class="val">51.7%</div><div class="lbl"><strong>46 of 89</strong> dated AI-signal records became effective in 2026</div></div><div class="kpi"><div class="val">26</div><div class="lbl">Disciplines / course types</div></div><div class="kpi"><div class="val">11</div><div class="lbl">AI-titled programs</div></div></div><div class="note-box">Total records include 79 distinct course titles; 117 counts undergraduate/graduate pairs that share one title as separate records. Of 117 total records, 89 have a usable effective year and 28 do not.</div></section>"""
+
+          if new in text:
+              print('Already applied')
+          else:
+              if old not in text:
+                  raise SystemExit('Section 2 metric block not found')
+              text = text.replace(old, new, 1)
+              path.write_text(text, encoding='utf-8')
+              print('Dashboard 8 highlight metric applied')
+          PY
+      - name: Commit change
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add resources/dashboard_8_provost_report.html
+            git commit -m "Highlight 2026 growth metric in Dashboard 8"
+            git push
+          fi
