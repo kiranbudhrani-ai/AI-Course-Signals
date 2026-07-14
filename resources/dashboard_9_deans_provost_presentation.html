@@ -9,7 +9,7 @@
 <noscript>This presentation requires JavaScript.</noscript>
 <script>
 (async()=>{
-  const source='https://cdn.jsdelivr.net/gh/kiranbudhrani-ai/AI-Course-Signals@661708255095fa7a0afd4e79d006517551463cdd/resources/dashboard_9_deans_provost_presentation.html';
+  const source='https://cdn.jsdelivr.net/gh/kiranbudhrani-ai/AI-Curriculum-Intelligence@661708255095fa7a0afd4e79d006517551463cdd/resources/dashboard_9_deans_provost_presentation.html';
 
   function patchSection11(){
     const clean=el=>(el&&el.textContent?el.textContent:'').replace(/\s+/g,' ').trim();
@@ -20,7 +20,6 @@
       if(document.querySelector('[data-added-distinct-courses="true"]')){clearInterval(timer);return;}
       const label=exactLeaf('Total AI integrity cases');
       if(!label){if(attempts>=120)clearInterval(timer);return;}
-
       let card=label;
       while(card&&card!==document.body){
         const text=clean(card);
@@ -28,7 +27,6 @@
         card=card.parentElement;
       }
       if(!card||card===document.body){if(attempts>=120)clearInterval(timer);return;}
-
       let group=card.parentElement;
       while(group&&group!==document.body){
         const text=clean(group);
@@ -36,19 +34,16 @@
         group=group.parentElement;
       }
       if(!group||group===document.body){if(attempts>=120)clearInterval(timer);return;}
-
       const clone=card.cloneNode(true);
       const leaves=[...clone.querySelectorAll('*')].filter(el=>el.children.length===0);
       const value=leaves.find(el=>clean(el)==='218');
       const caption=leaves.find(el=>clean(el)==='Total AI integrity cases');
       if(!value||!caption){if(attempts>=120)clearInterval(timer);return;}
-
       value.textContent='65';
       caption.textContent='Distinct courses with cases';
       clone.setAttribute('data-added-distinct-courses','true');
       group.setAttribute('data-ai-integrity-metrics','true');
       group.appendChild(clone);
-
       const style=document.createElement('style');
       style.textContent='[data-ai-integrity-metrics="true"]{grid-template-columns:repeat(4,minmax(0,1fr))!important}@media(max-width:820px){[data-ai-integrity-metrics="true"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(max-width:520px){[data-ai-integrity-metrics="true"]{grid-template-columns:1fr!important}}';
       document.head.appendChild(style);
